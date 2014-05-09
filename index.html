@@ -1,0 +1,87 @@
+search-function
+===============
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Homework 6 - Functions Problem 3</title>
+    <style type="text/css" media="screen">
+        div#text {
+            width: 750px;
+            padding: 20px;
+            border: 1px solid black;
+            margin-top: 20px;
+            font-family: Arial;
+            font-size: 16px;
+            text-align: justify;
+        }
+        div#notice {
+            display: none;
+            border: 1px solid red;
+            width: 350px;
+            color: blue;
+            padding: 0 10px;
+            margin: 10px 0;
+        }
+        h2,p {
+            margin: 5px 0;
+        }
+        span {
+            background: yellow;
+        }
+        input#check {
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <label for="word">Search for a word in the text:</label>
+    <input id="word" type="text" value=""/>
+    <input id="submit" type="button" value = "Search" onclick="searchWord()" />
+    <label for="check">Check for case sensitive search:</label>
+    <input id="check" type="checkbox" />
+    <div id="notice"></div>
+    <div id="text">
+        <h2>In This Chapter</h2>
+        <p>In this chapter we will take a look at the basic programming terminology and we will write our first C# program. We will familiarize ourselves with programming – what it means and its connection to computers and programming languages.</p>
+        <p>Briefly, we will review the different stages of software development.</p>
+        <p>We will introduce the C# language, the .NET platform and the different Microsoft technologies used in software development. We will examine what tools we need to program in C#. We will use the C# language to write our first computer program, compile and run it from the command line as well as from Microsoft Visual Studio integrated development environment. We will review the MSDN Library – the documentation of the .NET Framework. It will help us with our exploration of the features of the platform and the language.</p>
+        <h2>What Does It Mean "To Program"?</h2>
+        <p>Nowadays computers have become irreplaceable. We use them to solve complex problems at the workplace, look for driving directions, have fun and communicate. They have countless applications in the business world, the entertainment industry, telecommunications and finance. It’s not an over­statement to say that computers build the neural system of our contemporary society and it is difficult to imagine its existence without them.</p>
+        <p>Despite the fact that computers are so wide-spread, few people know how they really work. In reality, it is not the computers, but the programs (the software), which run on them, that matter. It is the software that makes computers valuable to the end-user, allowing for many different types of services that change our lives.</p>
+        <h2>How Do Computers Process Information?</h2>
+        <p>In order to understand what it means to program, we can roughly compare a computer and its operating system to a large factory with all its workshops, warehouses and transportation. This rough comparison makes it easier to imagine the level of complexity present in a contemporary computer. There are many processes running on a computer, and they represent the workshops and production lines in a factory. The hard drive, along with the files on it, and the operating memory (RAM) represent the warehouses, and the different protocols are the transportation systems, which provide the input and output of information.</p>
+        <p>The different types of products made in a factory come from different workshops. They use raw materials from the warehouses and store the completed goods back in them. The raw materials are transported to the warehouses by the suppliers and the completed product is transported from the warehouses to the outlets. To accomplish this, different types of transportation are used. Raw materials enter the factory, go through different stages of processing and leave the factory transformed into products. Each factory converts the raw materials into a product ready for consumption.</p>
+    </div>
+
+    <pre><script>
+
+        function searchWord(){
+            var check = document.getElementById("check").checked;
+            switch(check){
+                case true: 
+                    var search = document.getElementById("word").value;
+                    var lookFor = new RegExp("(\\b" + search + "\\b)", "gm");
+                    var text = document.getElementById("text").innerHTML;
+                    var clearText = text.replace(/(<span>|<\/span>)/gm, "");
+                    var newText = clearText.replace(lookFor, "<span>$1</span>");
+                    document.getElementById("text").innerHTML = newText;
+                    document.getElementById("notice").style.display="none"; break;
+                case false:             
+                    var search = document.getElementById("word").value;
+                    var lookFor = new RegExp("(\\b" + search + "\\b)", "gim");
+                    var text = document.getElementById("text").innerHTML;
+                    var clearText = text.replace(/(<span>|<\/span>)/gim, "");
+                    var newText = clearText.replace(lookFor, "<span>$1</span>");
+                    document.getElementById("text").innerHTML = newText;
+                    document.getElementById("notice").style.display="none"; break;
+            }
+            if (clearText == newText){
+                document.getElementById("notice").style.display="block";
+                document.getElementById("notice").innerHTML = "<p>" + search + " not found</p>";
+            }
+        }
+    </script></pre>
+</body>
+</html>
